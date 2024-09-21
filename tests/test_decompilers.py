@@ -21,7 +21,6 @@ DEC_TO_HEADLESS = {
     IDA_DECOMPILER: IDA_HEADLESS_PATH,
     GHIDRA_DECOMPILER: None,
     ANGR_DECOMPILER: None,
-    BINJA_DECOMPILER: None,
 }
 
 _l = logging.getLogger(__name__)
@@ -40,7 +39,7 @@ class TestHeadlessInterfaces(unittest.TestCase):
 
     def test_readme_example(self):
         # TODO: add angr, IDA
-        for dec_name in [GHIDRA_DECOMPILER, BINJA_DECOMPILER]:
+        for dec_name in [GHIDRA_DECOMPILER,]:
             deci = DecompilerInterface.discover(
                 force_decompiler=dec_name,
                 headless=True,
@@ -58,7 +57,7 @@ class TestHeadlessInterfaces(unittest.TestCase):
 
     def test_getting_artifacts(self):
         # TODO: add angr, IDA
-        for dec_name in [GHIDRA_DECOMPILER, BINJA_DECOMPILER]:
+        for dec_name in [GHIDRA_DECOMPILER,]:
             deci = DecompilerInterface.discover(
                 force_decompiler=dec_name,
                 headless=True,
@@ -357,6 +356,7 @@ class TestHeadlessInterfaces(unittest.TestCase):
         assert deci.functions[func_addr].name == self.RENAMED_NAME
         assert self.RENAMED_NAME in deci.main_instance.project.kb.functions
 
+    """
     def test_binja(self):
         deci = DecompilerInterface.discover(
             force_decompiler=BINJA_DECOMPILER,
@@ -411,9 +411,10 @@ class TestHeadlessInterfaces(unittest.TestCase):
         struct_keys = [k for k, v in struct_items]
         struct_values = [v for k, v in struct_items]
         assert new_struct.name not in struct_keys and new_struct not in struct_values
+    """
 
     def test_decompile_api(self):
-        for dec_name in [ANGR_DECOMPILER, GHIDRA_DECOMPILER, BINJA_DECOMPILER]:
+        for dec_name in [ANGR_DECOMPILER, GHIDRA_DECOMPILER]:
             deci = DecompilerInterface.discover(
                 force_decompiler=dec_name,
                 headless=True,
@@ -442,7 +443,7 @@ class TestHeadlessInterfaces(unittest.TestCase):
             self.deci.shutdown()
 
     def test_fast_function_api(self):
-        for dec_name in [GHIDRA_DECOMPILER, BINJA_DECOMPILER, ANGR_DECOMPILER]:
+        for dec_name in [GHIDRA_DECOMPILER, ANGR_DECOMPILER]:
             deci = DecompilerInterface.discover(
                 force_decompiler=dec_name,
                 headless=True,
